@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_line - draw a straight line using _
+ * print_diagonal - draw a straight line using _
  * @n: number of times _ would be drawn
  *
  * Return: Straight line.
