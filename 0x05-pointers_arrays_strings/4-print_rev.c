@@ -1,14 +1,20 @@
 #include "main.h"
 
 /**
- * _print_rev - prints a string in reverse
+ * print_rev - prints a string in reverse
  * @s: string to be printed in reverse
  */
 void print_rev(char *s)
 {
-	int i;
+	int lens, i;
 
-	for (i = _strlen(s); s[i] != '\2'; i--)
+	lens = 0;
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		lens++;
+	}
+
+	for (i = lens - 1; i >= 0; i--)
 	{
 		_putchar(s[i]);
 	}
