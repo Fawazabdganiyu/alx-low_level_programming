@@ -31,6 +31,10 @@ char *cap_string(char *str)
 			{
 				cap_next = 0;
 			}
+			else if (str[i] >= '0' && str[i] <= '9')
+			{
+				cap_next = 0;
+			}
 		}
 	}
 	return (str);
