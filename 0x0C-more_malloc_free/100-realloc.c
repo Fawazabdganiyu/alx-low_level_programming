@@ -33,7 +33,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	}
 
 	ptr_c = ptr;
-	N_ptr = malloc(new_size);
+	N_ptr = malloc(sizeof(*ptr_c) * new_size);
 	if (N_ptr == NULL)
 		return (NULL);
 
