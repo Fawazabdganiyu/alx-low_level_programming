@@ -38,7 +38,7 @@ void print_all(const char * const format, ...)
 				printf("%f", f);
 				break;
 			default:
-				continue;
+				break;
 		}
 		if (*f_ptr)
 			printf(", ");
