@@ -12,11 +12,12 @@ void print_all(const char * const format, ...)
 	char c, *s;
 	int i;
 	float f;
+	
+	if (format == NULL)
+		printf("(nil)");
 
 	va_start(ap, format);
 	f_ptr = format;
-	if (f_ptr == NULL)
-		return (NULL);
 	while (f_ptr && *f_ptr)
 	{
 		switch (*f_ptr++)
