@@ -8,14 +8,16 @@
 void print_all(const char * const format, ...)
 {
 	va_list ap;
+	const char *f_ptr;
 	char c, *s;
 	int i;
 	float f;
 
 	va_start(ap, format);
-	while (*format)
+	f_ptr = format;
+	while (*f_ptr)
 	{
-		switch (*format++)
+		switch (*f_ptr++)
 		{
 			case 'c':
 				c = (char)va_arg(ap, int);
@@ -39,7 +41,7 @@ void print_all(const char * const format, ...)
 				continue;
 		}
 
-		if (*format)
+		if (*f_ptr)
 			printf(", ");
 	}
 	va_end(ap);
