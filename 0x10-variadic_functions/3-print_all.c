@@ -17,7 +17,7 @@ void print_all(const char * const format, ...)
 	f_ptr = format;
 	while (f_ptr && *f_ptr)
 	{
-		switch (*f_ptr++)
+		switch (*f_ptr)
 		{
 			case 'c':
 				c = (char)va_arg(ap, int);
@@ -40,6 +40,8 @@ void print_all(const char * const format, ...)
 			default:
 				break;
 		}
+		++f_ptr;
+
 		if (*f_ptr)
 			printf(", ");
 	}
