@@ -40,7 +40,7 @@ void print_all(const char * const format, ...)
 			default:
 				continue;
 		}
-		
+
 		if (*f_ptr)
 			printf(", ");
 	}
