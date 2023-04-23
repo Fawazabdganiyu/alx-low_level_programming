@@ -12,7 +12,7 @@ void print_all(const char * const format, ...)
 	char c, *s;
 	int i;
 	float f;
-	
+
 	va_start(ap, format);
 	f_ptr = format;
 	if (f_ptr == NULL)
@@ -42,11 +42,9 @@ void print_all(const char * const format, ...)
 			default:
 				continue;
 		}
-
 		if (*f_ptr)
 			printf(", ");
 	}
 	va_end(ap);
-
 	printf("\n");
 }
