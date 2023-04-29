@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void __attribut__((constructor)) print(void);
+void __attribute__((constructor)) print(void);
 
 /**
  * print - Print before main print
