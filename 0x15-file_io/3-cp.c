@@ -21,32 +21,34 @@ ssize_t _read_and_write(const char *file_from, const char *file_to)
 	ssize_t fd_r, r, c;
 	char buffer[BUFFER_SIZE];
 
-	if (file_from == NULL)
+	if (file_from == NULL || file_to == NULL)
 		return (0);
 
 	fd_r = open(file_from, O_RDONLY);
 	fd_w = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (!fd_w || fd_w < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		exit(99);
+	}
 
 	while ((r = read(fd_r, buffer, BUFFER_SIZE)) > 0)
 	{
 		w = write(fd_w, buffer, r);
+		if (w < 0 || fd_w < 0)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+			exit(99);
+		}
 	}
+	if (r == 0)
+		write(fd_w, buffer, r);
 	if (fd_r < 0 || r < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
 		exit(98);
 	}
-	if (fd_w < 0 || w < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
-		c = close(fd_w);
-		if (c < 0)
-		{
-			dprintf(STDERR_FILENO, "Error: Can'tclose fd %d\n", fd_w);
-			exit(100);
-		}
-		exit(99);
-	}
+
 	c = close(fd_w);
 	if (c < 0)
 	{
