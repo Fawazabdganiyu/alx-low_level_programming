@@ -22,13 +22,13 @@ int _write(const char *file_to, char *text_content, int num)
 	if (file_to == NULL)
 		return (0);
 
-	fd = open(file_to, O_CREAT | O_RDWR | O_TRUNC, 0706);
+	fd = open(file_to, O_CREAT | O_RDWR | O_TRUNC, 0664);
 	w = write(fd, text_content, num);
-	if (fd == -1 || w == -1)
+	if (fd < 0 || w < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
 		c = close(fd);
-		if (c == -1)
+		if (c < 0)
 		{
 			dprintf(STDERR_FILENO, "Error: Can'tclose fd %d\n", fd);
 			exit(100);
@@ -36,7 +36,7 @@ int _write(const char *file_to, char *text_content, int num)
 		exit(99);
 	}
 	c = close(fd);
-	if (c == -1)
+	if (c < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 		exit(100);
@@ -62,13 +62,13 @@ ssize_t _read(const char *file_from, const char *file_to)
 	fd = open(file_from, O_RDONLY);
 	r = read(fd, buffer, 1024);
 
-	if (fd == -1 || r == -1)
+	if (fd < 0 || r < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
 		exit(98);
 	}
 	c = close(fd);
-	if (c == -1)
+	if (c < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", fd);
 		exit(100);
