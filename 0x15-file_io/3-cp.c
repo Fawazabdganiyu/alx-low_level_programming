@@ -2,79 +2,64 @@
 #include <stdlib.h>
 #include "main.h"
 
-int _write(const char *file_to, char *text_content, int num);
-ssize_t _read(const char *file_from, const char *file_to);
+#define BUFFER_SIZE 1024
+
+ssize_t _read_and_write(const char *file_from, const char *file_to);
 ssize_t cp(const char *file_from, const char *file_to);
 int main(int ac, char *av[]);
 
 /**
- * _write - writes to file, create it if it does not exist.
- * @file_to: The name of the file to be written to.
- * @text_content: The character strings to write
- * @num: The number of characters to be written.
- *
- * Return: 1 on success, 0 on failure
- */
-int _write(const char *file_to, char *text_content, int num)
-{
-	int fd, w, c;
-
-	if (file_to == NULL)
-		return (0);
-
-	fd = open(file_to, O_CREAT | O_RDWR | O_TRUNC, 0664);
-	w = write(fd, text_content, num);
-	if (fd < 0 || w < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
-		c = close(fd);
-		if (c < 0)
-		{
-			dprintf(STDERR_FILENO, "Error: Can'tclose fd %d\n", fd);
-			exit(100);
-		}
-		exit(99);
-	}
-	c = close(fd);
-	if (c < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-	return (1);
-}
-
-/**
- * _read - reads the content of a file.
+ * _read_and_write - reads the content of a file and write it to another.
  * @file_from: The file to read from.
  * @file_to: The name of the file to be written to.
  *
  * Return: 1 on succes and 0, on failure
  */
-ssize_t _read(const char *file_from, const char *file_to)
+ssize_t _read_and_write(const char *file_from, const char *file_to)
 {
-	ssize_t fd, r, c;
-	char buffer[1024];
+	int fd_w, w;
+	ssize_t fd_r, r, c;
+	char buffer[BUFFER_SIZE];
 
 	if (file_from == NULL)
 		return (0);
 
-	fd = open(file_from, O_RDONLY);
-	r = read(fd, buffer, 1024);
+	fd_r = open(file_from, O_RDONLY);
+	fd_w = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 
-	if (fd < 0 || r < 0)
+	while ((r = read(fd_r, buffer, BUFFER_SIZE)) > 0)
+	{
+		w = write(fd_w, buffer, r);
+	}
+	if (fd_r < 0 || r < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
 		exit(98);
 	}
-	c = close(fd);
+	if (fd_w < 0 || w < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		c = close(fd_w);
+		if (c < 0)
+		{
+			dprintf(STDERR_FILENO, "Error: Can'tclose fd %d\n", fd_w);
+			exit(100);
+		}
+		exit(99);
+	}
+	c = close(fd_w);
 	if (c < 0)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_w);
 		exit(100);
 	}
 
-	_write(file_to, buffer, r);
+	c = close(fd_r);
+	if (c < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", fd_r);
+		exit(100);
+	}
 
 	return (1);
 }
@@ -90,7 +75,7 @@ ssize_t cp(const char *file_from, const char *file_to)
 {
 	ssize_t rd;
 
-	rd = _read(file_from, file_to);
+	rd = _read_and_write(file_from, file_to);
 	if (rd == 0)
 		return (0);
 
