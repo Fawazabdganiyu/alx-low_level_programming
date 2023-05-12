@@ -13,6 +13,8 @@ void print_data(unsigned char *e_ident);
 void print_version(unsigned char *e_ident);
 void print_OSABI(unsigned char *e_ident);
 void print_ABIversion(unsigned char *e_ident);
+void print_type(uint16_t e_type);
+void print_entry(Elf64_Addr e_entry);
 void _close(int elf_fd);
 void print_error_and_exit(char *message, char *elf_filename);
 int main(int ac, char *av[]);
@@ -159,6 +161,35 @@ void print_ABIversion(unsigned char *e_ident)
 }
 
 /**
+ * print_type - prints type of elf header.
+ * @e_type: The elf type
+ */
+void print_type(uint16_t e_type)
+{
+	printf("  Type:				     ");
+
+	if (e_type == ET_NONE)
+		printf("NONE (Unknown file)\n");
+	if (e_type == ET_REL)
+		printf("REL (Relocatable file)\n");
+	if (e_type == ET_EXEC)
+		printf("EXEC (Executable file)\n");
+	if (e_type == ET_DYN)
+		printf("DYN (Shared object file)\n");
+	if (e_type == ET_CORE)
+		printf("CORE (Core file)\n");
+}
+
+/**
+ * print_entry - prints entry point address of elf header
+ * @e_entry: The elf header entry point address.
+ */
+void print_entry(Elf64_Addr e_entry)
+{
+	printf("  Entry point address:		     0x%lx\n", e_entry);
+}
+
+/**
  * _close - closes an elf file.
  * @elf_fd: The elf file file discriptor.
  *
@@ -207,11 +238,9 @@ int main(int ac, char *av[])
 		dprintf(STDERR_FILENO, "Usage: %s elf_filename\n", av[0]);
 		exit(98);
 	}
-
 	elf_fd = open(av[1], O_RDONLY);
 	if (elf_fd < 0)
 		print_error_and_exit("Error: Can't read from file %s\n", av[1]);
-
 	header = malloc(sizeof(Elf64_Ehdr));
 	if (header == NULL)
 	{
@@ -225,7 +254,6 @@ int main(int ac, char *av[])
 		_close(elf_fd);
 		print_error_and_exit("Error: Can't read from file %s\n", av[1]);
 	}
-
 	printf("ELF Header:\n");
 	check_elf(header->e_ident, av[1]);
 	print_magic_number(header->e_ident);
@@ -234,9 +262,10 @@ int main(int ac, char *av[])
 	print_version(header->e_ident);
 	print_OSABI(header->e_ident);
 	print_ABIversion(header->e_ident);
+	print_type(header->e_type);
+	print_entry(header->e_entry);
 
 	free(header);
 	_close(elf_fd);
-
 	return (0);
 }
