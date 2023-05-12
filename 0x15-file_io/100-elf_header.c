@@ -254,8 +254,8 @@ int main(int ac, char *av[])
 		_close(elf_fd);
 		print_error_and_exit("Error: Can't read from file %s\n", av[1]);
 	}
-	printf("ELF Header:\n");
 	check_elf(header->e_ident, av[1]);
+	printf("ELF Header:\n");
 	print_magic_number(header->e_ident);
 	print_class(header->e_ident);
 	print_data(header->e_ident);
