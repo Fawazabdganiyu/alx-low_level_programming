@@ -32,7 +32,7 @@ void check_elf(unsigned char *e_ident, char *elf_filename)
 			(e_ident[2] != ELFMAG2) &&
 			(e_ident[3] != ELFMAG3))
 	{
-		print_error_and_exit("Error: The given file %s is not an elf file\n", elf_filename);
+		print_error_and_exit("Error: File %s is not an elf file\n", elf_filename);
 	}
 }
 
