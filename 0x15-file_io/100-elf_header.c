@@ -251,6 +251,7 @@ int main(int ac, char *av[])
 	r = read(elf_fd, header, sizeof(Elf64_Ehdr));
 	if (r < 0)
 	{
+		free(header);
 		_close(elf_fd);
 		print_error_and_exit("Error: Can't read from file %s\n", av[1]);
 	}
