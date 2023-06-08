@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "main.h"
 
 int  _sqrt(int guess, int n);
@@ -14,12 +15,9 @@ int is_prime_number(int n);
 int  _sqrt(int guess, int n)
 {
 	if (guess * guess >= n)
-	{
-		return (guess);
-	}
+		return (guess / 1);
 
-	guess++;
-	return (_sqrt(guess, n));
+	return (_sqrt(guess + 1, n));
 }
 
 /**
@@ -33,14 +31,13 @@ int  _sqrt(int guess, int n)
 int check_prime(int num, int min, int max)
 {
 	/* Base condition */
-	if (min > max && !(num % min))
+	if (min > max)
 		return (1);
 
-	if (num % min)
+	if (num % min == 0)
 		return (0);
 
-	min++;
-	return (check_prime(num, min, max));
+	return (check_prime(num, min + 1, max));
 }
 
 /**
@@ -52,7 +49,7 @@ int check_prime(int num, int min, int max)
  */
 int is_prime_number(int n)
 {
-	int prime;
+	int prime = 7;
 
 	if (n < 2)
 		return (0);
