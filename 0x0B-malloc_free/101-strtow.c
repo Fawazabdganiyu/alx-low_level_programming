@@ -129,7 +129,7 @@ char **strtow(char *str)
 	char **arr, *s;
 	int row = row_num(str), i, j, k;
 
-	if (str == NULL || strcmp(str, ""))
+	if (str == NULL || *str == '\0')
 		return (NULL);
 
 	arr = malloc(sizeof(char *) * (row + 1));
