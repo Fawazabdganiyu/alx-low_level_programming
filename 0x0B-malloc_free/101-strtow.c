@@ -63,7 +63,7 @@ char **strtow(char *str)
 	if (str == NULL || *str == '\0')
 		return (NULL);
 
-	arr = malloc(sizeof(char *) * (row));
+	arr = malloc(sizeof(char *) * (row + 1));
 	if (arr == NULL)
 		return (NULL);
 
@@ -85,9 +85,7 @@ char **strtow(char *str)
 		}
 
 		for (k = 0; k < j; k++)
-		{
 			arr[i][k] = s[k];
-		}
 		arr[i][k] = '\0';
 
 		s += j;
