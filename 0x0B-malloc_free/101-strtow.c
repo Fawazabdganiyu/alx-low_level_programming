@@ -1,4 +1,4 @@
-#include <string.h>
+#include <stdio.h>
 #include "main.h"
 
 /**
@@ -46,77 +46,6 @@ int row_num(char *str)
 }
 
 /**
- * normal_len - calculate the normal length  a given string
- * @str: the string to get its normal lenght
- *
- * Return: the normal lenght of the given string
- */
-int normal_len(char *str)
-{
-	int count = 0;
-	int i;
-	int blank = 0;
-
-	for (i = 0; str[i]; i++)
-	{
-		if (str[i] == ' ')
-		{
-			if (blank == 1)
-			{
-				count++;
-			}
-			blank = 0;
-		}
-		else
-		{
-			count++;
-			blank = 1;
-		}
-	}
-
-	return (count);
-}
-
-/**
- * normalise - represent a given string in its normal form with only a blank
- * @str: the string to normalise
- *
- * Return: the normalise string
- */
-char *normalise(char *str)
-{
-	char *s;
-	int i, j = 0;
-	int blank = 0;
-	int len;
-
-	len = normal_len(str);
-	s = malloc(sizeof(char) * len + 1);
-	if (s == NULL)
-		return (NULL);
-
-	for (i = 0; str[i]; i++)
-	{
-		if (str[i] == ' ')
-		{
-			if (blank == 1)
-			{
-				s[j++] = str[i];
-			}
-			blank = 0;
-		}
-		else
-		{
-			s[j++] = str[i];
-			blank = 1;
-		}
-	}
-	s[j] = '\0';
-
-	return (s);
-}
-
-/**
  * strtow - splits a string into words.
  * @str: the string to split
  *
@@ -129,14 +58,16 @@ char **strtow(char *str)
 	char **arr, *s;
 	int row = row_num(str), i, j, k;
 
+	if (row == 0)
+		return (NULL);
 	if (str == NULL || *str == '\0')
 		return (NULL);
 
-	arr = malloc(sizeof(char *) * (row + 1));
+	arr = malloc(sizeof(char *) * (row));
 	if (arr == NULL)
 		return (NULL);
 
-	s = normalise(str);
+	s = str;
 	i = 0;
 	while (*s != '\0' && i < row)
 	{
