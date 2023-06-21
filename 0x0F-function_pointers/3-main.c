@@ -7,11 +7,11 @@
  *
  * Description: performs simple operations.
  *
- * Return: The expected result on success
+ * Return: 0 on success.
  */
 int main(int ac, char **av)
 {
-	int (*func)(int, int);
+	int (*func)(int a, int b);
 	int num1, num2;
 	char *div = "/", *mod = "%";
 
