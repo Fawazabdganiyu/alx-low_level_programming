@@ -1,6 +1,29 @@
 #include "variadic_functions.h"
 
 /**
+ * _strcmp - compares strings".
+ * @s1: first string
+ *
+ * Return: 0 if s1 == s2, (-) if s1 is less and (+) if s2 is greater
+ */
+void _strcmp(char *s1)
+{
+	int i = 0;
+	char *s2 = "NULL";
+
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+		{
+			printf("%s", s1);
+			return;
+		}
+		i++;
+	}
+	printf("(nil)");
+}
+
+/**
  * print_all - Prints anything.
  * @format: The list of types of arguments passed to the function.
  */
@@ -24,9 +47,7 @@ void print_all(const char * const format, ...)
 				break;
 			case 's':
 				s = va_arg(ap, char *);
-				if (strcmp(s, "NULL") != 0)
-					printf("%s", s);
-				printf("(nil)");
+				_strcmp(s);
 				break;
 			case 'i':
 				i = va_arg(ap, int);
