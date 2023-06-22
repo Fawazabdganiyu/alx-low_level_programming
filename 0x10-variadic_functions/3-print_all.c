@@ -2,9 +2,7 @@
 
 /**
  * _strcmp - compares strings".
- * @s1: first string
- *
- * Return: 0 if s1 == s2, (-) if s1 is less and (+) if s2 is greater
+ * @s1: The first string
  */
 void _strcmp(char *s1)
 {
@@ -30,16 +28,14 @@ void _strcmp(char *s1)
 void print_all(const char * const format, ...)
 {
 	va_list ap;
-	const char *f_ptr;
 	char c, *s;
-	int i;
+	int i, j;
 	float f;
 
 	va_start(ap, format);
-	f_ptr = format;
-	while (f_ptr && *f_ptr)
+	while (format && format[j])
 	{
-		switch (*f_ptr++)
+		switch (format[j++])
 		{
 			case 'c':
 				c = va_arg(ap, int);
@@ -47,6 +43,11 @@ void print_all(const char * const format, ...)
 				break;
 			case 's':
 				s = va_arg(ap, char *);
+				if (s == NULL)
+				{
+					printf("(nil)");
+					break;
+				}
 				_strcmp(s);
 				break;
 			case 'i':
@@ -60,8 +61,7 @@ void print_all(const char * const format, ...)
 			default:
 				continue;
 		}
-
-		if (*f_ptr)
+		if (format[j])
 			printf(", ");
 	}
 	va_end(ap);
