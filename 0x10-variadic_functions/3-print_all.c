@@ -24,9 +24,9 @@ void print_all(const char * const format, ...)
 				break;
 			case 's':
 				s = va_arg(ap, char *);
-				if (s == NULL)
-					printf("(nil)");
-				printf("%s", s);
+				if (strcmp(s, "NULL") != 0)
+					printf("%s", s);
+				printf("(nil)");
 				break;
 			case 'i':
 				i = va_arg(ap, int);
