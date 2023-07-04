@@ -8,7 +8,7 @@
  */
 void set_string(char **s, char *to)
 {
-	if (s == NULL)
+	if (s == NULL || to == NULL)
 		return;
 
 	*s = to;
