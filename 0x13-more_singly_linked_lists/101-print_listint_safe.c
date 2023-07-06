@@ -58,7 +58,7 @@ size_t print_listint_safe(const listint_t *head)
 	const listint_t *fast = head, *slow = head, *temp = head;
 
 	if (head == NULL)
-		return(0);
+		return (0);
 
 	/* Check if the list has loop */
 	fast = detect_loop(head);
@@ -68,28 +68,32 @@ size_t print_listint_safe(const listint_t *head)
 		nodes = no_loop_print(head);
 		return (nodes);
 	}
+	else
+	{
+		/* Set one of the (slow or fast) pointers back to the head */
+		slow = head;
+		/* Get the location of the loop */
+		while (slow != fast)
+		{
+			slow = slow->next;
+			fast = fast->next;
+		}
+		/* Print the list only once */
+		nodes = 0;
+		temp = head;
+		while (temp)
+		{
+			if (temp == slow)
+				printed = 1;
+			printf("[%p] %d\n", (void *)temp, temp->n);
+			nodes++;
+			temp = temp->next;
+			if ((temp == slow) && printed)
+				break;
+		}
+		printf("-> [%p] %d\n", (void *)slow, slow->n);
+		return (nodes);
+	}
 
-	/* Set one of the (slow or fast) pointers back to the head */
-	slow = head;
-	/* Get the location of the loop */
-	while (slow != fast)
-	{
-		slow = slow->next;
-		fast = fast->next;
-	}
-	/* Print the list only once */
-	nodes = 0;
-	temp = head;
-	while (temp)
-	{
-		if (temp == slow)
-			printed = 1;
-		printf("[%p] %d\n", (void *)temp, temp->n);
-		nodes++;
-		temp = temp->next;
-		if ((temp == slow) && printed)
-			break;
-	}
-	printf("-> [%p] %d\n", (void *)slow, slow->n);
-	return (nodes);
+	exit(98);
 }
