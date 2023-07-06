@@ -58,7 +58,7 @@ size_t print_listint_safe(const listint_t *head)
 	const listint_t *fast = head, *slow = head, *temp = head;
 
 	if (head == NULL)
-		return (98);
+		exit(98);
 
 	/* Check if the list has loop */
 	fast = detect_loop(head);
