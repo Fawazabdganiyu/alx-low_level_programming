@@ -68,6 +68,13 @@ void cp(int fd_r, int fd_w, const char *file_from, const char *file_to)
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
 			exit(99);
 		}
+
+		/**
+		 * Prepare buffer for reuse
+		 * But I later realised this is not necessary when I tested
+		 * with and without this function
+		 * Allocated memory clears its content when new input is read
+		 */
 		clear_buffer(buff);
 	} while (nread == BUFFER_SIZE);
 
