@@ -1,6 +1,21 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+#define BUFFER_SIZE 1024
+
+/**
+ * struct buffer_s - struct for buffer
+ * @buf: Buffer
+ * @start: First memory address of buff
+ *
+ * Description: A temporary buffer for reading file
+ */
+typedef struct buffer_s
+{
+	char *buf;
+	char *start;
+} buffer_t;
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
