@@ -60,6 +60,7 @@ void print_magic_number(unsigned char *e_ident)
 		else
 			printf(" ");
 	}
+
 }
 
 /**
@@ -71,7 +72,7 @@ void print_magic_number(unsigned char *e_ident)
  */
 void print_class(unsigned char *e_ident)
 {
-	printf("  Class:			     ");
+	printf("  Class:                             ");
 
 	if (e_ident[EI_CLASS] == ELFCLASSNONE)
 		printf("none\n");
@@ -92,7 +93,7 @@ void print_class(unsigned char *e_ident)
  */
 void print_data(unsigned char *e_ident)
 {
-	printf("  Data:				     ");
+	printf("  Data:                              ");
 
 	if (e_ident[EI_DATA] == ELFDATANONE)
 		printf("Unknown data format\n");
@@ -110,7 +111,7 @@ void print_data(unsigned char *e_ident)
  */
 void print_version(unsigned char *e_ident)
 {
-	printf("  Version:			     ");
+	printf("  Version:                           ");
 	if (e_ident[EI_VERSION] == EV_NONE)
 		printf("(invalid)\n");
 	else if (e_ident[EI_VERSION] == EV_CURRENT)
@@ -126,7 +127,7 @@ void print_version(unsigned char *e_ident)
  */
 void print_OSABI(unsigned char *e_ident)
 {
-	printf("  OS/ABI:			     ");
+	printf("  OS/ABI:                            ");
 
 	if (e_ident[EI_OSABI] == ELFOSABI_NONE || e_ident[EI_OSABI] == ELFOSABI_SYSV)
 		printf("UNIX - System V\n");
@@ -158,7 +159,7 @@ void print_OSABI(unsigned char *e_ident)
  */
 void print_ABIversion(unsigned char *e_ident)
 {
-	printf("  ABI Version:			     %d\n", e_ident[EI_ABIVERSION]);
+	printf("  ABI Version:                       %d\n", e_ident[EI_ABIVERSION]);
 }
 
 /**
@@ -167,7 +168,7 @@ void print_ABIversion(unsigned char *e_ident)
  */
 void print_type(uint16_t e_type)
 {
-	printf("  Type:				     ");
+	printf("  Type:                              ");
 
 	if (e_type == ET_NONE)
 		printf("NONE (Unknown file)\n");
@@ -187,9 +188,8 @@ void print_type(uint16_t e_type)
  */
 void print_entry(Elf64_Addr e_entry)
 {
-	printf("  Entry point address:		     0x%lx\n", e_entry);
+	printf("  Entry point address:               0x%lx\n", e_entry);
 }
-
 /**
  * _close - closes an elf file.
  * @elf_fd: The elf file file discriptor.
