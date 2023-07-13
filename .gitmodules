@@ -1,6 +1,6 @@
 [submodule "printf"]
-	path = printf
+	path = 0x11-printf
 	url = ../printf
 [submodule "simple_shell"]
-	path = simple_shell
+	path = 0x16-simple_shell
 	url = ../simple_shell/
