@@ -1,3 +1,6 @@
 [submodule "printf"]
 	path = printf
 	url = ../printf
+[submodule "simple_shell"]
+	path = simple_shell
+	url = ../simple_shell/
