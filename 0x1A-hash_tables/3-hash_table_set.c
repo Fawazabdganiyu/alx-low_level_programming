@@ -3,12 +3,14 @@
 /**
  * add_node - adds a node to the beginning of the linked list
  * @head: A pointer to the head node pointer
+ * @index: The index of the key in the hash table.
  * @key: The key, string
  * @value: The value corresponding to a key
  *
  * Return: A pointer to a new node
  */
-hash_node_t *add_node(hash_node_t **head, unsigned long int index, const char *key, const char *value)
+hash_node_t *add_node(hash_node_t **head, unsigned long int index,
+		const char *key, const char *value)
 {
 	hash_node_t *new;
 
