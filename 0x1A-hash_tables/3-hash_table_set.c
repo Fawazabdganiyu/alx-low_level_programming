@@ -59,6 +59,9 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	hash_node_t **head, *update_node, *first_node;
 	char *temp;
 
+	if (ht == NULL || key == NULL || value == NULL ||
+			*key == '\0' || *value == '\0')
+		return (0);
 	if (strcmp(key, "") == 0)
 		return (0);
 
@@ -73,7 +76,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	}
 	else
 	{	/* Check the bucket */
-		update_node = search_list(*head, key);
+		update_node = search_list(first_node, key);
 		if (update_node != NULL)
 		{	/* Update the bucket */
 			temp = update_node->value;
@@ -86,5 +89,4 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	}
 
 	return (1);
-
 }
