@@ -8,7 +8,7 @@
  *
  * Return: A pointer to a new node
  */
-hash_node_t *add_node(hash_node_t **head, const char *key, const char *value)
+hash_node_t *add_node(hash_node_t **head, unsigned long int index, const char *key, const char *value)
 {
 	hash_node_t *new;
 
@@ -19,8 +19,8 @@ hash_node_t *add_node(hash_node_t **head, const char *key, const char *value)
 	new->key = strdup(key);
 	new->value = strdup(value);
 
-	new->next = *head;
-	*head = new;
+	new->next = head[index];
+	head[index] = new;
 
 	return (new);
 }
@@ -54,7 +54,7 @@ hash_node_t *search_list(hash_node_t *head, const char *key)
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	unsigned long int index;
-	hash_node_t *head, *update_node;
+	hash_node_t **head, *update_node, *first_node;
 	char *temp;
 
 	if (strcmp(key, "") == 0)
@@ -63,22 +63,24 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	index = key_index((const unsigned char *)key, ht->size);
 
 	/* Check if the index is NULL (Available for storage) */
-	head = ht->array[index];
-	if (head == NULL)
+	head = ht->array;
+	first_node = ht->array[index];
+	if (first_node == NULL)
 	{	/* Set at this index */
-		add_node(&head, key, value);
+		add_node(head, index, key, value);
 	}
 	else
 	{	/* Check the bucket */
-		update_node = search_list(head, key);
+		update_node = search_list(*head, key);
 		if (update_node != NULL)
 		{	/* Update the bucket */
 			temp = update_node->value;
 			update_node->value = strdup(value);
 			free(temp);
 		}
-		else /* Add it to the beginning of the list */
-			add_node(&head, key, value);
+		else /* Handle collision */
+			/* Add it to the beginning of the list */
+			add_node(head, index, key, value);
 	}
 
 	return (1);
