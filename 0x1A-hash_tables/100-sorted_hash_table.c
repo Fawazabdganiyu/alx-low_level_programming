@@ -3,7 +3,7 @@
 shash_node_t *add_node(shash_node_t **head, unsigned long int index,
 		shash_node_t *new);
 shash_node_t *search_slist(shash_node_t *head, const char *key);
-void insert_bucket(shash_table_t *ht, shash_node_t *new);
+int insert_bucket(shash_table_t *ht, shash_node_t *new);
 void sorted_insert(shash_table_t *ht, shash_node_t *new);
 shash_node_t **create_array(unsigned long int size);
 
@@ -54,7 +54,7 @@ shash_node_t *search_slist(shash_node_t *head, const char *key)
  * @ht: A pointer to the hash table
  * @new: A pointer to the new node to be added.
  */
-void insert_bucket(shash_table_t *ht, shash_node_t *new)
+int insert_bucket(shash_table_t *ht, shash_node_t *new)
 {
 	unsigned long int index;
 	shash_node_t **head, *update_node, *first_node;
@@ -68,6 +68,7 @@ void insert_bucket(shash_table_t *ht, shash_node_t *new)
 	if (first_node == NULL)
 	{	/* Set at this index */
 		add_node(head, index, new);
+		return (1);
 	}
 	else
 	{	/* Check the bucket */
@@ -77,11 +78,15 @@ void insert_bucket(shash_table_t *ht, shash_node_t *new)
 			temp = update_node->value;
 			update_node->value = new->value;
 			free(temp);
+			return (0);
 		}
 		else /* Handle collision */
-			/* Add it to the beginning of the list */
+		{	/* Add it to the beginning of the list */
 			add_node(head, index, new);
+			return (1);
+		}
 	}
+	return (-1);
 }
 
 /**
@@ -202,8 +207,8 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	new->snext = NULL;
 	new->sprev = NULL;
 
-	sorted_insert(ht, new);
-	insert_bucket(ht, new);
+	if (insert_bucket(ht, new) != 0)
+		sorted_insert(ht, new);
 
 	return (1);
 }
