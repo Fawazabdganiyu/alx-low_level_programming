@@ -53,6 +53,9 @@ shash_node_t *search_slist(shash_node_t *head, const char *key)
  * insert_bucket - insert node in the bucket and handle collision appropriately
  * @ht: A pointer to the hash table
  * @new: A pointer to the new node to be added.
+ *
+ * Return: 1 if there is insertion, 0 if there is only update
+ *	-1 on failure
  */
 int insert_bucket(shash_table_t *ht, shash_node_t *new)
 {
@@ -207,7 +210,7 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	new->snext = NULL;
 	new->sprev = NULL;
 
-	if (insert_bucket(ht, new) != 0)
+	if (insert_bucket(ht, new) == 1)
 		sorted_insert(ht, new);
 
 	return (1);
