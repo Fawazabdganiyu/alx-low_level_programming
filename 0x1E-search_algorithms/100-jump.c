@@ -1,6 +1,5 @@
-#include "search_algos.h"
 #include <math.h>
-
+#include "search_algos.h"
 
 /**
  * _min - finds mininum of two integers
@@ -28,7 +27,7 @@ int jump_search(int *array, size_t size, int value)
 {
 	size_t jump, start, end, i, low, high;
 
-	if (array == NULL || size == 0)
+	if (array == NULL)
 		return (-1);
 
 	start = 0;
