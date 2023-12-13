@@ -13,7 +13,7 @@
  */
 listint_t *jump_list(listint_t *list, size_t size, int value)
 {
-	listint_t *start = list, *end = list, *prev_e, *prev_s;
+	listint_t *start = list, *end = list, *prev_e;
 	size_t jump = sqrt(size), i;
 
 	if (list == NULL)
@@ -36,19 +36,17 @@ listint_t *jump_list(listint_t *list, size_t size, int value)
 		}
 		printf("Value checked at index [%lu] = [%d]\n", end->index, end->n);
 	}
-
-	printf("Value found between indexes [%lu] and [%lu]\n", start->index, end->index);
+	printf("Value found between indexes [%lu] and [%lu]\n", start->index,
+	       end->index);
 
 	/* Linear search through the identified block */
 	while (start != end && start->n < value)
 	{
 		printf("Value checked at index [%lu] = [%d]\n", start->index, start->n);
-		prev_s = start;
 		start = start->next;
 	}
-
-	start = !start ? prev_s : start;
 	printf("Value checked at index [%lu] = [%d]\n", start->index, start->n);
+
 	if (start && start->n == value)
 		return (start);
 
